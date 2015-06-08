@@ -11,7 +11,7 @@ export default Ember.Object.extend({
 
         if ( this.get('is_private') ) {
             event_name = 'websocket_rails.subscribe_private';
-        } 
+        }
         else {
             event_name = 'websocket_rails.subscribe';
         }
@@ -21,9 +21,14 @@ export default Ember.Object.extend({
         var connection_id = conn != null ? conn.connection_id : void 0;
 
         this.set('connection_id', connection_id );
-        var event = WebsocketRailsEvent.create({ 
-                        data: [ event_name, { channel: this.get('name') }, this.get('connection_id') ], 
-                        success_callback: this.get('on_success'), failure_callback: this.get('on_failure') 
+        // var event = WebsocketRailsEvent.create({
+        //                 data: [ event_name, { channel: this.get('name') }, this.get('connection_id') ],
+        //                 success_callback: this.get('on_success'), failure_callback: this.get('on_failure')
+        // });
+
+        var event = WebsocketRailsEvent.create({
+                        data: [ event_name, this.get('name'), this.get('connection_id') ],
+                        success_callback: this.get('on_success'), failure_callback: this.get('on_failure')
         });
 
         dispatcher.trigger_event(event);
@@ -90,7 +95,7 @@ export default Ember.Object.extend({
         if (event_name === 'websocket_rails.channel_token') {
             var dispatcher = this.get('dispatcher');
             var conn = dispatcher.conn;
-            var connection_id = conn != null ? conn.connection_id : void 0; 
+            var connection_id = conn != null ? conn.connection_id : void 0;
             this.set('connection_id', connection_id);
             this.set('token', message['token'] );
             this.flush_queue();
@@ -104,7 +109,7 @@ export default Ember.Object.extend({
             var results = [];
             for ( var i = 0; i < callback.length; i++) {
                 var _callback = callback[i];
-                results.push(_callback(message)); 
+                results.push(_callback(message));
             }
             return results;
         }
