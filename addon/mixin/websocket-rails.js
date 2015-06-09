@@ -34,7 +34,7 @@ export default Ember.Mixin.create({
 
         //if (!(this.supports_websockets() && this.use_websockets)) {
         if (!(this.supports_websockets() )) {
-           //conn = 'Http'; 
+           //conn = 'Http';
         }
         else {
             conn = WebsocketRailsWebsocketConnection.create({ url: socketURL, dispatcher: this });
@@ -52,7 +52,7 @@ export default Ember.Mixin.create({
         }
 
         return support;
-    }, 
+    },
 
     disconnect: function() {
 
@@ -61,8 +61,8 @@ export default Ember.Mixin.create({
         if ( conn ) {
             conn.close();
             delete conn.conn;
-            
-        } 
+
+        }
 
         this.set('state', 'disconnected');
     },
@@ -70,7 +70,7 @@ export default Ember.Mixin.create({
     _bind_event: function(event_name, callback) {
         console.log('websockets_rails: bind()');
         var callbacks = this.get('callbacks');
-        if ( callbacks[event_name] == null) { 
+        if ( callbacks[event_name] == null) {
             callbacks[event_name] = [];
         }
         callbacks[event_name].push(callback);
@@ -167,19 +167,19 @@ export default Ember.Mixin.create({
             else {
                 results.push(void 0);
             }
-            
+
         }
         return results;
     },
 
     pong: function() {
-        console.log('websockets_rails: pong()');
+        //console.log('websockets_rails: pong()');
         var conn = this.get('conn');
         var connection_id = conn != null ? conn.connection_id : void 0;
         var pong = WebsocketRailsEvent.create({ data: [ 'websocket_rails.pong', {}, connection_id ]  });
         conn.trigger(pong);
     },
-    
+
     connection_established: function(data) {
         console.log('websockets_rails: connection_established()');
         this.set('state', 'connected');
@@ -234,7 +234,7 @@ export default Ember.Mixin.create({
 //            return channel;
         }
         else {
-            
+
  //           return channels[channel_name];
         }
     },
@@ -267,14 +267,14 @@ export default Ember.Mixin.create({
         var queue = this.get('queue');
         if ( queue[event.id] == null ) {
             queue[event.id] = event;
-        } 
+        }
         this.set('queue', queue);
 
         var conn = this.get('conn');
         if ( conn ) {
             conn.trigger(event);
         }
-        return event; 
+        return event;
     },
 
     _unsubscribe: function(channel_name) {
@@ -329,7 +329,7 @@ export default Ember.Mixin.create({
             console.log('websockets_rails: action -> unsubscribe()');
             this._unsubscribe(channel_name);
         }
-        
+
     }
-    
+
 });
