@@ -5,25 +5,25 @@ export default Ember.Object.extend({
 
     init: function() {
         this.set('message_queue', []);
-        console.log( 'abstract_connection: init()' );
+        //console.log( 'abstract_connection: init()' );
     },
 
     close: function() {
     },
 
     trigger: function(event) {
-        console.log( 'abstract_connection: trigger()' );
+        //console.log( 'abstract_connection: trigger()' );
         var dispatcher = this.get('dispatcher');
         if (dispatcher.state !== 'connected') {
             return this.get('message_queue').push(event);
-        } 
+        }
         else {
             return this.send_event(event);
         }
     },
 
     send_event: function(event) {
-        console.log( 'abstract_connection: send_event()' );
+        //console.log( 'abstract_connection: send_event()' );
         var connection_id = this.get('connection_id');
         if (connection_id != null) {
             return event.connection_id = connection_id;
@@ -31,7 +31,7 @@ export default Ember.Object.extend({
     },
 
     on_close: function(event) {
-        console.log( 'abstract_connection: on_close()' );
+        //console.log( 'abstract_connection: on_close()' );
         var dispatcher = this.get('dispatcher');
         if (dispatcher && dispatcher.conn === this) {
             dispatcher.state = 'disconnected';
@@ -39,10 +39,10 @@ export default Ember.Object.extend({
             var close_event = WebsocketRailsEvent.create({ message: [ 'connection_closed', event ] });
             return dispatcher.dispatch(close_event);
         }
-    }, 
+    },
 
     on_error: function(event) {
-        console.log( 'abstract_connection: on_error()' );
+        //console.log( 'abstract_connection: on_error()' );
         var dispatcher = this.get('dispatcher');
         if (dispatcher && dispatcher.conn === this) {
             dispatcher.state = 'disconnected';
@@ -52,20 +52,20 @@ export default Ember.Object.extend({
     },
 
     on_message: function(event_data) {
-        console.log( 'abstract_connection: on_message()' );
+        //console.log( 'abstract_connection: on_message()' );
         var dispatcher = this.get('dispatcher');
         if (dispatcher && dispatcher.conn === this) {
             return dispatcher.new_message(event_data);
         }
     },
-  
+
     setConnectionId: function(connection_id) {
-        console.log( 'abstract_connection: setConnectionId()' );
+        //console.log( 'abstract_connection: setConnectionId()' );
         this.set('connection_id', connection_id );
     },
 
     flush_queue: function() {
-        console.log( 'abstract_connection: flush_queue()' );
+        //console.log( 'abstract_connection: flush_queue()' );
 
         var message_queue = this.get('message_queue');
 
@@ -74,6 +74,6 @@ export default Ember.Object.extend({
         }
 
         this.set('message_queue', []);
-    } 
+    }
 
 });
