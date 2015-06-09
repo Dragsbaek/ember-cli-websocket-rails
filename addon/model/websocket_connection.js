@@ -5,7 +5,7 @@ export default WebsocketRailsAbstractConnection.extend({
     connection_type: 'websocket',
 
     init: function() {
-        console.log('websocket_connection: init()');
+        //console.log('websocket_connection: init()');
         this._super();
 
         var url        = this.get('url');
@@ -29,8 +29,8 @@ export default WebsocketRailsAbstractConnection.extend({
         var conn = new WebSocket(url);
 
         conn.onmessage = function(event) {
-            console.log('conn.onmessage');
-            console.log( event );
+            //console.log('conn.onmessage');
+            //console.log( event );
 //data: "["client_connected",{"connection_id":"39d043b9-bce8-4b39-84d3-f54c2402469d"},{"id":null,"channel":null,"user_id":null,"success":null,"result":null,"token":null,"server_token":null}]"
 
             var event_data = JSON.parse(event.data);
