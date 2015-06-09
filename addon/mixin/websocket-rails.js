@@ -68,7 +68,7 @@ export default Ember.Mixin.create({
     },
 
     _bind_event: function(event_name, callback) {
-        console.log('websockets_rails: bind()');
+        //console.log('websockets_rails: bind()');
         var callbacks = this.get('callbacks');
         if ( callbacks[event_name] == null) {
             callbacks[event_name] = [];
@@ -78,7 +78,7 @@ export default Ember.Mixin.create({
     },
 
     dispatch: function(event) {
-        console.log('websockets_rails: dispatch()');
+        //console.log('websockets_rails: dispatch()');
         var callbacks = this.get('callbacks');
 //        console.log(callbacks);
         if (callbacks[event.name] == null) {
