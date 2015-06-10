@@ -2,13 +2,17 @@ import Ember from 'ember';
 
 export default Ember.Object.extend({
 
-    // var event = WebsocketRailsEvent.create( data: data, success_callback: success_callback, failure_callback: failure_callback });    
+  SUCCEEDED: 0,
+  FAILED: 1,
+  FINISHED_WITHOUT_FAILURE: 2,
+
+    // var event = WebsocketRailsEvent.create( data: data, success_callback: success_callback, failure_callback: failure_callback });
     init: function() {
         //console.log('event: init()');
 
         var data = this.get('data');
         var name = data[0];
-        var attr = data[1]; 
+        var attr = data[1];
 
         this.set('name', name);
 
@@ -67,9 +71,9 @@ export default Ember.Object.extend({
         //console.log('event: run_callbacks()');
         this.set('success', success);
         this.set('result',result);
-        if (this.get('success') === true) {
+        if (this.get('success') === this.get('SUCCEEDED')) {
             return typeof this.success_callback === "function" ? this.success_callback(this.get('result')) : void 0;
-        } 
+        }
         else {
             return typeof this.failure_callback === "function" ? this.failure_callback(this.get('result')) : void 0;
         }
