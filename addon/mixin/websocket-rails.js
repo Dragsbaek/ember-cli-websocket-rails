@@ -131,8 +131,11 @@ export default Ember.Mixin.create({
     },
 
     new_message: function(data) {
-        console.log('websockets_rails: new_message()');
-        console.log(data);
+        
+        if (data[0][0] !== "websocket_rails.ping" || data[0][0] !== "websocket_rails.pong") {    
+            console.log('websockets_rails: new_message()');
+            console.log(data);
+        };
 
         var queue = this.get('queue');
         var results = [];
