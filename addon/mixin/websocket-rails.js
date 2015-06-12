@@ -132,7 +132,7 @@ export default Ember.Mixin.create({
 
     new_message: function(data) {
 
-        if (data[0][0] !== "websocket_rails.ping" && data[0][0] !== "websocket_rails.pong") {    
+        if (data[0][0] !== "websocket_rails.ping" && data[0][0] !== "websocket_rails.pong") {
             console.log('websockets_rails: new_message()');
             console.log(data);
         };
@@ -233,7 +233,7 @@ export default Ember.Mixin.create({
         var channels = this.get('channels');
         if (channels[channel_name] == null) {
             var channel = WebsocketRailsChannel.create({ name: channel_name, dispatcher: this, is_private: false, on_success: success_callback, on_failure: failure_callback });
-            channels[channel_name] = channel;
+            channels[channel_name.channel] = channel;
             this.set('channels', channels);
 //            return channel;
         }
@@ -248,7 +248,7 @@ export default Ember.Mixin.create({
         var channels = this.get('channels');
         if (channels[channel_name] == null) {
             var channel = WebsocketRailsChannel.create({ name: channel_name, dispatcher: this, is_private: true, on_success: success_callback, on_failure: failure_callback });
-            channels[channel_name] = channel;
+            channels[channel_name.channel] = channel;
             this.set('channels', channels);
             return channel;
         }
